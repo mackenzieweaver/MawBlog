@@ -1,0 +1,43 @@
+﻿.navbar, .footer {
+    color: #ffffff !important;
+    background-color: #264653 !important;
+}
+
+a.navbar-brand {
+    color: white !important;
+}
+
+a.navbar-brand:hover {
+    color: #F4A261 !important;
+    opacity: 1 !important;
+}
+
+a.nav-link {
+    color: white !important;
+}
+
+a.nav-link:hover {
+    color: #F4A261 !important;
+    opacity: 1 !important;
+}
+
+a {
+    color: #F4A261;
+    border: none;
+}
+
+a:hover {
+    color: #F4A261;
+    opacity: 0.75;
+    border: none;
+}
+
+.btn {
+    border: none;
+    background-color: #264653 !important;
+}
+
+.btn:hover {
+    color: #F4A261;
+    opacity: 1;
+}
