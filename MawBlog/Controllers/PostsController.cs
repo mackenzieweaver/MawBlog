@@ -86,7 +86,7 @@ namespace MawBlog.Controllers
             {
                 return NotFound();
             }
-            ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Id", post.BlogId);
+            ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Name", post.BlogId);
             return View(post);
         }
 
