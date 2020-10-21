@@ -48,7 +48,7 @@ namespace MawBlog.Controllers
         // GET: Tags/Create
         public IActionResult Create()
         {
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id");
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Title");
             return View();
         }
 
@@ -82,7 +82,7 @@ namespace MawBlog.Controllers
             {
                 return NotFound();
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", tag.PostId);
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Title", tag.PostId);
             return View(tag);
         }
 

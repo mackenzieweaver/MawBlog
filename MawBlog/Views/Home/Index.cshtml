@@ -17,18 +17,23 @@
                 <small>on tech</small>
             </h1>
 
-            @foreach (var item in Model)
+            @foreach (var post in Model)
             {
                 <!-- Blog Post -->
                 <div class="card mb-4">
-                    <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.Image)" alt="Card image cap">
+                    <img class="card-img-top" src="@Html.DisplayFor(data => post.Image)" alt="Card image cap">
                     <div class="card-body">
-                        <h2 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.Abstract)</p>
-                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Read More &rarr;</a>
+                        <h2 class="card-title">@Html.DisplayFor(data => post.Title)</h2>
+                        <p class="card-text">@Html.DisplayFor(data => post.Abstract)</p>
+                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Read More &rarr;</a>
+                        @* Add in Tags *@
+                        @*@foreach (var tag in post.Tags)
+                        {
+                            <p class="card-text" style="opacity: 0.9">@Html.DisplayFor(data => tag.Name)</p>
+                        }*@
                     </div>
                     <div class="card-footer text-muted">
-                        Posted on @Html.DisplayFor(modelItem => item.Created) in @Html.DisplayFor(modelItem => item.Blog.Name)
+                        Posted on @Html.DisplayFor(data => post.Created) in @Html.DisplayFor(data => post.Blog.Name)
                     </div>
                 </div>
             }
