@@ -19,8 +19,10 @@ namespace MawBlog.Models
 
         #region Navigation
         // Have a navigation for each foriegn key
-        public Post Post { get; set; }
-        public BlogUser Author { get; set; }
+        //public Post Post { get; set; }
+        public virtual Post Post { get; set; }
+        //public BlogUser Author { get; set; }
+        public virtual BlogUser Author { get; set; }
         #endregion
     }
 }

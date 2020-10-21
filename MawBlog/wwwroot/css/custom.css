@@ -7,11 +7,6 @@ a.navbar-brand {
     color: white !important;
 }
 
-a.navbar-brand:hover {
-    color: #F4A261 !important;
-    opacity: 1 !important;
-}
-
 a.nav-link {
     color: white !important;
 }

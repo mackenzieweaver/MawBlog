@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MawBlog.Data;
 using MawBlog.Models;
+using System.Text.RegularExpressions;
 
 namespace MawBlog.Controllers
 {
@@ -57,10 +58,13 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogId,Title,Abstract,Content,Image,Created,Updated")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated")] Post post)
         {
             if (ModelState.IsValid)
             {
+                post.Created = DateTime.Now;
+                post.Updated = DateTime.Now;
+                post.Slug = Regex.Replace(post.Title.ToLower(), @"\s", "-");
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -91,7 +95,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,Image,Created,Updated")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated")] Post post)
         {
             if (id != post.Id)
             {
@@ -102,6 +106,7 @@ namespace MawBlog.Controllers
             {
                 try
                 {
+                    post.Updated = DateTime.Now;
                     _context.Update(post);
                     await _context.SaveChangesAsync();
                 }

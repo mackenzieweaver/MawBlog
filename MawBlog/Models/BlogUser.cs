@@ -19,11 +19,13 @@ namespace MawBlog.Models
 
         public string DisplayName { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        //public List<Comment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         // Constructor
         public BlogUser()
         {
-            Comments = new List<Comment>();
+            //Comments = new List<Comment>();
+            Comments = new HashSet<Comment>();
         }
     }
 }

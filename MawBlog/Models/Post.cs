@@ -18,19 +18,30 @@ namespace MawBlog.Models
         public string Abstract { get; set; }
 
         public string Content { get; set; }
+        public string Slug { get; set; }
+        public bool IsPublished { get; set; }
+
         public byte[] Image { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
 
-        public Blog Blog { get; set; }
-        public List<Comment> Comments{ get; set; }
-        public List<Tag> Tags { get; set; }
-
+        #region Navigation        
+        //public Blog Blog { get; set; }
+        public virtual Blog Blog { get; set; }
+        //public List<Comment> Comments{ get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        //public List<Tag> Tags { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+        #endregion
+        //public Post()
+        //{
+        //    Comments = new List<Comment>();
+        //    Tags = new List<Tag>();
+        //}
         public Post()
         {
-            Comments = new List<Comment>();
-            Tags = new List<Tag>();
+            Comments = new HashSet<Comment>();
+            Tags = new HashSet<Tag>();
         }
-
     }
 }

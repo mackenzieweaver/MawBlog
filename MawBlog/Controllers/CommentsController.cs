@@ -50,7 +50,7 @@ namespace MawBlog.Controllers
         public IActionResult Create()
         {
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id");
-            ViewData["PostId"] = new SelectList(_context.Set<Post>(), "Id", "Id");
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace MawBlog.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
-            ViewData["PostId"] = new SelectList(_context.Set<Post>(), "Id", "Id", comment.PostId);
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
@@ -86,7 +86,7 @@ namespace MawBlog.Controllers
                 return NotFound();
             }
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
-            ViewData["PostId"] = new SelectList(_context.Set<Post>(), "Id", "Id", comment.PostId);
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
@@ -123,7 +123,7 @@ namespace MawBlog.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
-            ViewData["PostId"] = new SelectList(_context.Set<Post>(), "Id", "Id", comment.PostId);
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
