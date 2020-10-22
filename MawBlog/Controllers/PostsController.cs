@@ -73,6 +73,26 @@ namespace MawBlog.Controllers
             return View(post);
         }
 
+        public async Task<IActionResult> BlogPosts(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blog = await _context.Blog.FindAsync(id);
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["BlogName"] = blog.Name;
+            ViewData["BlogId"] = blog.Id;
+
+            var blogPosts = await _context.Post.Where(p => p.BlogId == blog.Id).ToListAsync();
+            return View(blogPosts);
+        }
+
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -160,6 +180,6 @@ namespace MawBlog.Controllers
         private bool PostExists(int id)
         {
             return _context.Post.Any(e => e.Id == id);
-        }
+        }        
     }
 }
