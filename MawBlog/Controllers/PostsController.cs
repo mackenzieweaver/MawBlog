@@ -51,20 +51,24 @@ namespace MawBlog.Controllers
         {
             if(id == null)
             {
-                return NotFound();
+                ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Name");
             }
-            var blog = _context.Blog.Find(id);
-            if(blog == null)
+            else
             {
-                return NotFound();
+                var blog = _context.Blog.Find(id);
+                if (blog == null)
+                {
+                    return NotFound();
+                }
+                var newPost = new Post()
+                {
+                    BlogId = (int)id
+                };
+                ViewData["BlogName"] = blog.Name;
+                ViewData["BlogId"] = id;
+                return View(newPost);
             }
-            //ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Name");
-            var newPost = new Post()
-            {
-                BlogId = (int)id
-            };
-            ViewData["BlogName"] = blog.Name;
-            return View(newPost);
+            return View();
         }
 
         // POST: Posts/Create
