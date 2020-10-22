@@ -47,10 +47,24 @@ namespace MawBlog.Controllers
         }
 
         // GET: Posts/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Name");
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var blog = _context.Blog.Find(id);
+            if(blog == null)
+            {
+                return NotFound();
+            }
+            //ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Name");
+            var newPost = new Post()
+            {
+                BlogId = (int)id
+            };
+            ViewData["BlogName"] = blog.Name;
+            return View(newPost);
         }
 
         // POST: Posts/Create
@@ -69,7 +83,7 @@ namespace MawBlog.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Id", post.BlogId);
+            ViewData["BlogId"] = new SelectList(_context.Blog, "Id", "Name", post.BlogId);
             return View(post);
         }
 
