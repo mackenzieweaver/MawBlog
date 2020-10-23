@@ -1,6 +1,11 @@
-﻿.navbar, .footer {
+﻿:root {
+    --primary: #264653;
+    --secondary: #F4A261;
+}
+
+.navbar, .footer {
     color: #ffffff !important;
-    background-color: #264653 !important;
+    background-color: var(--primary) !important;
 }
 
 a.navbar-brand {
@@ -12,27 +17,27 @@ a.nav-link {
 }
 
 a.nav-link:hover {
-    color: #F4A261 !important;
+    color: var(--secondary) !important;
     opacity: 1 !important;
 }
 
 a {
-    color: #F4A261;
+    color: var(--secondary);
     border: none;
 }
 
 a:hover {
-    color: #F4A261;
+    color: var(--secondary);
     opacity: 0.75;
     border: none;
 }
 
 .btn {
     border: none;
-    background-color: #264653 !important;
+    background-color: var(--primary) !important;
 }
 
 .btn:hover {
-    color: #F4A261;
+    color: var(--secondary);
     opacity: 1;
 }
