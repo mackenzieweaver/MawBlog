@@ -28,6 +28,18 @@ namespace MawBlog.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> Results(string SearchString)
+        {
+            var posts = from p in _context.Post
+                        select p;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                posts = posts.Where(p => p.Title.Contains(SearchString) || p.Abstract.Contains(SearchString) || p.Content.Contains(SearchString));                
+                return View("Index", await posts.ToListAsync());
+            }
+            return View("Index", await posts.ToListAsync());
+        }
+
         public IActionResult Privacy()
         {
             return View();
