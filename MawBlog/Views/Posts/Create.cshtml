@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (Model == null)
             {
@@ -49,9 +49,9 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="FileName" class="control-label"></label><br />
+                <input asp-for="Image" type="file" />
+                @*<span asp-validation-for="FileName" class="text-danger"></span>*@
             </div>
             @*<div class="form-group">
             <label asp-for="Created" class="control-label"></label>

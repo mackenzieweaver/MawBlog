@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +23,8 @@ namespace MawBlog.Models
         public string Slug { get; set; }
         public bool IsPublished { get; set; }
 
+        [Display(Name = "File Name")]
+        public string FileName { get; set; }
         public byte[] Image { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }

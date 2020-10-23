@@ -9,21 +9,22 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-            <h1 class="my-4">My thoughts<small>on tech</small></h1>
+            <h1 class="my-4">My thoughts <small>on tech</small></h1>
             @foreach (var post in Model.OrderByDescending(m => m.Created))
             {
                 <!-- Blog Post -->
                 <div class="card mb-4">
                     <img class="card-img-top" src="@Html.DisplayFor(data => post.Image)" alt="Card image cap">
+                    @*<img class="card-img-top" src="./fizzbuzz900x300.png" alt="Card image cap">*@
                     <div class="card-body">
                         <h2 class="card-title">@Html.DisplayFor(data => post.Title)</h2>
                         <p class="card-text">@Html.DisplayFor(data => post.Abstract)</p>
                         <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Read More &rarr;</a>
                         @* Add in Tags *@
                         @*@foreach (var tag in post.Tags)
-                            {
-                                <p class="card-text" style="opacity: 0.9">@Html.DisplayFor(data => tag.Name)</p>
-                            }*@
+                        {
+                            <p class="card-text" style="opacity: 0.9">@Html.DisplayFor(data => tag.Name)</p>
+                        }*@
                     </div>
                     <div class="card-footer text-muted">
                         Posted on @Html.DisplayFor(data => post.Created) in @Html.DisplayFor(data => post.Blog.Name)
@@ -43,6 +44,7 @@
 
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
+
             <!-- Search Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
@@ -57,6 +59,7 @@
                     </form>
                 </div>
             </div>
+
             <!-- Categories Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Categories</h5>

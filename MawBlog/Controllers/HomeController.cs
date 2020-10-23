@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using MawBlog.Models;
 using MawBlog.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore;
 
 namespace MawBlog.Controllers
 {
@@ -35,9 +36,9 @@ namespace MawBlog.Controllers
             if (!String.IsNullOrEmpty(SearchString))
             {
                 posts = posts.Where(p => p.Title.Contains(SearchString) || p.Abstract.Contains(SearchString) || p.Content.Contains(SearchString));                
-                return View("Index", await posts.ToListAsync());
+                return View("Index", await posts.Include(p => p.Blog).ToListAsync());
             }
-            return View("Index", await posts.ToListAsync());
+            return View("Index", await posts.Include(p => p.Blog).ToListAsync());
         }
 
         public IActionResult Privacy()
