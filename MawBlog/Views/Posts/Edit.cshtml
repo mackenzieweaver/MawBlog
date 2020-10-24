@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -34,30 +34,31 @@
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
-            </div>*@
+            <label asp-for="Slug" class="control-label"></label>
+            <input asp-for="Slug" class="form-control" />
+            <span asp-validation-for="Slug" class="text-danger"></span>
+        </div>*@
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsPublished" /> @Html.DisplayNameFor(model => model.IsPublished)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="FileName" class="control-label"></label><br />
+                <input asp-for="Image" type="file" />
+                @*<span asp-validation-for="FileName" class="text-danger"></span>*@
             </div>
+            @Html.HiddenFor(model => model.Created)
             @*<div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Updated" class="control-label"></label>
-                <input asp-for="Updated" class="form-control" />
-                <span asp-validation-for="Updated" class="text-danger"></span>
-            </div>*@
+            <label asp-for="Created" class="control-label"></label>
+            <input asp-for="Created" class="form-control" />
+            <span asp-validation-for="Created" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Updated" class="control-label"></label>
+            <input asp-for="Updated" class="form-control" />
+            <span asp-validation-for="Updated" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

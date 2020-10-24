@@ -43,11 +43,14 @@ namespace MawBlog.Controllers
                 return NotFound();
             }
 
-            var binary = Convert.ToBase64String(post.Image);
-            var ext = Path.GetExtension(post.FileName);
-            string imageDataURL = $"data:image/{ext};base64,{binary}";
-            ViewData["Image"] = imageDataURL;
-
+            //if(post.Image != null)
+            //{
+            //    var binary = Convert.ToBase64String(post.Image);
+            //    var ext = Path.GetExtension(post.FileName);
+            //    string imageDataURL = $"data:image/{ext};base64,{binary}";
+            //    ViewData["Image"] = imageDataURL;
+            //}
+            //post.FileName = "No image included in this post";
             return View(post);
         }
 
@@ -81,7 +84,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated")] Post post, IFormFile image)
+        public async Task<IActionResult> Create([Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated,ImageDataUrl")] Post post, IFormFile image)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +102,10 @@ namespace MawBlog.Controllers
 
                     ms.Close();
                     ms.Dispose();
+
+                    var binary = Convert.ToBase64String(post.Image);
+                    var ext = Path.GetExtension(post.FileName);
+                    post.ImageDataUrl = $"data:image/{ext};base64,{binary}";
                 }
 
                 _context.Add(post);
@@ -151,7 +158,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated,ImageDataUrl")] Post post, IFormFile image)
         {
             if (id != post.Id)
             {
@@ -162,6 +169,19 @@ namespace MawBlog.Controllers
             {
                 try
                 {
+                    if(image != null)
+                    {
+                        post.FileName = image.FileName;
+                        var ms = new MemoryStream();
+                        image.CopyTo(ms);
+                        post.Image = ms.ToArray();
+                        ms.Close();
+                        ms.Dispose();
+
+                        var binary = Convert.ToBase64String(post.Image);
+                        var ext = Path.GetExtension(post.FileName);
+                        post.ImageDataUrl = $"data:image/{ext};base64,{binary}";
+                    }
                     post.Updated = DateTime.Now;
                     _context.Update(post);
                     await _context.SaveChangesAsync();

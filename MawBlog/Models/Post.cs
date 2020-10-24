@@ -26,6 +26,8 @@ namespace MawBlog.Models
         [Display(Name = "File Name")]
         public string FileName { get; set; }
         public byte[] Image { get; set; }
+        public string ImageDataUrl { get; set; }
+
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
 

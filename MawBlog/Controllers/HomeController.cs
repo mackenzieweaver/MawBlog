@@ -9,6 +9,7 @@ using MawBlog.Models;
 using MawBlog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore;
+using System.IO;
 
 namespace MawBlog.Controllers
 {
@@ -25,8 +26,21 @@ namespace MawBlog.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Post.Include(p => p.Blog);
-            return View(await applicationDbContext.ToListAsync());
+            var posts = _context.Post.Include(p => p.Blog);
+            //foreach(var post in posts)
+            //{
+            //    if (post.Image != null)
+            //    {
+            //        var binary = Convert.ToBase64String(post.Image);
+            //        var ext = Path.GetExtension(post.FileName);
+            //        string imageDataURL = $"data:image/{ext};base64,{binary}";
+            //        //ViewData["Image"] = imageDataURL;
+            //        post.ImageDataUrl = imageDataURL;
+            //        _context.Update(post);
+            //    }
+            //}
+            //await _context.SaveChangesAsync();
+            return View(await posts.ToListAsync());
         }
 
         public async Task<IActionResult> Results(string SearchString)
