@@ -49,6 +49,10 @@
                 @*<span asp-validation-for="FileName" class="text-danger"></span>*@
             </div>
             @Html.HiddenFor(model => model.Created)
+            @if(Model.ImageDataUrl != null)
+            {
+                @Html.HiddenFor(model => model.ImageDataUrl);
+            }
             @*<div class="form-group">
             <label asp-for="Created" class="control-label"></label>
             <input asp-for="Created" class="form-control" />
