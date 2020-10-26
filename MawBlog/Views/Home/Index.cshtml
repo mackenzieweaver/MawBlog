@@ -22,9 +22,9 @@
                         <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Read More &rarr;</a>
                         @* Add in Tags *@
                         @*@foreach (var tag in post.Tags)
-                            {
-                                <p class="card-text" style="opacity: 0.9">@Html.DisplayFor(data => tag.Name)</p>
-                            }*@
+                        {
+                            <p class="card-text" style="opacity: 0.9">@Html.DisplayFor(data => tag.Name)</p>
+                        }*@
                     </div>
                     <div class="card-footer text-muted">
                         Posted on @Html.DisplayFor(data => post.Created) in @Html.DisplayFor(data => post.Blog.Name)

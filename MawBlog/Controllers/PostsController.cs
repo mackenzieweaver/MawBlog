@@ -10,6 +10,7 @@ using MawBlog.Models;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using MawBlog.Utilities;
 
 namespace MawBlog.Controllers
 {
@@ -36,21 +37,11 @@ namespace MawBlog.Controllers
             {
                 return NotFound();
             }
-
             var post = await _context.Post.Include(p => p.Blog).FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
                 return NotFound();
             }
-
-            //if(post.Image != null)
-            //{
-            //    var binary = Convert.ToBase64String(post.Image);
-            //    var ext = Path.GetExtension(post.FileName);
-            //    string imageDataURL = $"data:image/{ext};base64,{binary}";
-            //    ViewData["Image"] = imageDataURL;
-            //}
-            //post.FileName = "No image included in this post";
             return View(post);
         }
 
@@ -90,24 +81,13 @@ namespace MawBlog.Controllers
             {
                 post.Created = DateTime.Now;
                 post.Updated = DateTime.Now;
-                post.Slug = Regex.Replace(post.Title.ToLower(), @"\s", "-");
+                post.Slug = Regex.Replace(post.Title.ToLower(), @"\s", "-");                
                 //Write image to db
                 if(image != null)
                 {
-                    post.FileName = image.FileName;
-
-                    var ms = new MemoryStream();
-                    image.CopyTo(ms);
-                    post.Image = ms.ToArray();
-
-                    ms.Close();
-                    ms.Dispose();
-
-                    var binary = Convert.ToBase64String(post.Image);
-                    var ext = Path.GetExtension(post.FileName);
-                    post.ImageDataUrl = $"data:image/{ext};base64,{binary}";
+                    var imageHelper = new ImageHelper();
+                    imageHelper.WriteImage(post, image);
                 }
-
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -171,16 +151,8 @@ namespace MawBlog.Controllers
                 {
                     if(image != null)
                     {
-                        post.FileName = image.FileName;
-                        var ms = new MemoryStream();
-                        image.CopyTo(ms);
-                        post.Image = ms.ToArray();
-                        ms.Close();
-                        ms.Dispose();
-
-                        var binary = Convert.ToBase64String(post.Image);
-                        var ext = Path.GetExtension(post.FileName);
-                        post.ImageDataUrl = $"data:image/{ext};base64,{binary}";
+                        var imageHelper = new ImageHelper();
+                        imageHelper.WriteImage(post, image);
                     }
                     post.Updated = DateTime.Now;
                     _context.Update(post);
