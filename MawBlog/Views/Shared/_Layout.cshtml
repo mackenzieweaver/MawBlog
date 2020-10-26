@@ -8,12 +8,18 @@
     <link rel="stylesheet" href="~/css/site.css" />
     @* Custom CSS *@
     <link href="~/css/custom.css" rel="stylesheet" />
+
+    @* Data tables css *@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+    @* Font Awesome Kit *@
+    <script src="https://kit.fontawesome.com/8b5ae67e5c.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div id="navContainer" class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Macks Tech Journal</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mack's Tech Hub</a>
                 <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -67,6 +73,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @* Data tables js *@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
