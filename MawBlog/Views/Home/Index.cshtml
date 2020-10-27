@@ -27,7 +27,7 @@
                             }*@
                     </div>
                     <div class="card-footer text-muted">
-                        Posted on @Html.DisplayFor(data => post.Created) in @Html.DisplayFor(data => post.Blog.Name)
+                        Posted on @post.Created.ToString("MMM dd, yyyy") in @Html.DisplayFor(data => post.Blog.Name)
                     </div>
                 </div>
             }

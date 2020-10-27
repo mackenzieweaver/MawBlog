@@ -49,8 +49,8 @@ namespace MawBlog.Controllers
         // GET: Comments/Create
         public IActionResult Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id");
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id");
+            ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "FirstName");
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Title");
             return View();
         }
 
@@ -59,16 +59,25 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,AuthorId,Content,Created,Updated")] Comment comment)
+        public async Task<IActionResult> Create([Bind("PostId")] Comment comment, string userComment)
         {
             if (ModelState.IsValid)
             {
+                var email = HttpContext.User.Identity.Name;
+                var authorid = _context.Users.FirstOrDefault(u => u.Email == email).Id;
+
+                comment.Created = DateTime.Now;
+                comment.Updated = DateTime.Now;
+                comment.Content = userComment;
+                comment.AuthorId = authorid;
+                
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return Redirect($"~/Posts/Details/{comment.PostId}");
+                return RedirectToAction("Details", "Posts", new { id = comment.PostId });
             }
-            ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
+            //ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
+            //ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
             return View(comment);
         }
 

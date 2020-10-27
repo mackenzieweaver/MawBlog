@@ -37,10 +37,18 @@ namespace MawBlog.Controllers
             {
                 return NotFound();
             }
-            var post = await _context.Post.Include(p => p.Blog).FirstOrDefaultAsync(m => m.Id == id);
+            var post = await _context.Post
+                .Include(p => p.Blog)
+                .Include(p => p.Comments)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
                 return NotFound();
+            }
+            // for each comment load author
+            foreach(var comment in post.Comments.ToList())
+            {
+                comment.Author = await _context.Users.FindAsync(comment.AuthorId);
             }
             return View(post);
         }

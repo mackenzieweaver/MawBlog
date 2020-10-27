@@ -41,3 +41,8 @@ a:hover {
     color: var(--secondary);
     opacity: 1;
 }
+
+.noHover {
+    pointer-events: none;
+    color: white;
+}
