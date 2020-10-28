@@ -50,6 +50,19 @@ namespace MawBlog.Controllers
             return View("Index", await posts.Include(p => p.Blog).ToListAsync());
         }
 
+        public async Task<IActionResult> Categories()
+        {
+            var id = RouteData.Values["id"].ToString();
+            var posts = _context.Post.Where(p => p.BlogId == Int32.Parse(id) && p.IsPublished == true).Include(p => p.Blog);
+            var blogs = _context.Blog;
+            CategoriesVM categories = new CategoriesVM()
+            {
+                Blogs = await blogs.ToListAsync(),
+                Posts = await posts.ToListAsync()
+            };
+            return View("Index", categories);
+        }
+
         public IActionResult Privacy()
         {
             return View();

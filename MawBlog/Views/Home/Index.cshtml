@@ -70,9 +70,10 @@
                             <ul class="list-unstyled mb-0">
                                 @foreach (var blog in Model.Blogs)
                                 {
-                                    <li>
-                                        <a asp-controller="Posts" asp-action="BlogPosts" asp-route-id="@blog.Id">@blog.Name</a>
-                                    </li>
+                                <li>
+                                    @*<a asp-controller="Posts" asp-action="BlogPosts" asp-route-id="@blog.Id">@blog.Name</a>*@
+                                    <a asp-controller="Home" asp-action="Categories" asp-route-id="@blog.Id">@blog.Name</a>
+                                </li>
                                 }
                                 @*<li>
                                     <a href="#">Web Design</a>
