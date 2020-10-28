@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MawBlog.Models.Post>
+﻿@*@model IEnumerable<MawBlog.Models.Post>*@
+@model MawBlog.ViewModels.CategoriesVM
 
 @{
     ViewData["Title"] = "Home Page";
@@ -10,7 +11,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <h1 class="my-4">My thoughts <small>on tech</small></h1>
-            @foreach (var post in Model.OrderByDescending(m => m.Created))
+            @foreach (var post in Model.Posts.OrderByDescending(m => m.Created))
             {
                 <!-- Blog Post -->
                 <div class="card mb-4">
@@ -67,7 +68,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
-                                <li>
+                                @foreach (var blog in Model.Blogs)
+                                {
+                                    <li>
+                                        <a asp-controller="Posts" asp-action="BlogPosts" asp-route-id="@blog.Id">@blog.Name</a>
+                                    </li>
+                                }
+                                @*<li>
                                     <a href="#">Web Design</a>
                                 </li>
                                 <li>
@@ -75,12 +82,12 @@
                                 </li>
                                 <li>
                                     <a href="#">Freebies</a>
-                                </li>
+                                </li>*@
                             </ul>
                         </div>
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
-                                <li>
+                                @*<li>
                                     <a href="#">JavaScript</a>
                                 </li>
                                 <li>
@@ -88,7 +95,7 @@
                                 </li>
                                 <li>
                                     <a href="#">Tutorials</a>
-                                </li>
+                                </li>*@
                             </ul>
                         </div>
                     </div>

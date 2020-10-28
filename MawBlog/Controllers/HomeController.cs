@@ -10,6 +10,8 @@ using MawBlog.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore;
 using System.IO;
+using System.Collections;
+using MawBlog.ViewModels;
 
 namespace MawBlog.Controllers
 {
@@ -26,8 +28,14 @@ namespace MawBlog.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var posts = _context.Post.Include(p => p.Blog);
-            return View(await posts.ToListAsync());
+            var posts = _context.Post.Where(p => p.IsPublished).Include(p => p.Blog);        
+            var blogs = _context.Blog;
+            CategoriesVM categories = new CategoriesVM()
+            {
+                Blogs = await blogs.ToListAsync(),
+                Posts = await posts.ToListAsync()
+            };
+            return View(categories);
         }
 
         public async Task<IActionResult> Results(string SearchString)
