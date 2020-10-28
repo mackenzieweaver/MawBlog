@@ -5,3 +5,13 @@
 $(document).ready(function () {
     $('.myTables').DataTable();
 });
+
+
+function ToggleEdit(comment) {
+    var visible = document.getElementById('editForm-' + comment);
+    if (visible.classList.contains('editForm')) {
+        visible.classList.remove('editForm');
+    } else {
+        visible.classList.add('editForm');
+    }
+}

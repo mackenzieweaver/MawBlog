@@ -46,3 +46,17 @@ a:hover {
     pointer-events: none;
     color: white;
 }
+
+.editAnchor {
+    font-size: 0.9rem !important;
+    font-weight: 400;
+    color: var(--secondary) !important;
+    opacity: 1 !important;
+    border: none;
+    background-color:transparent;
+    padding-left: 2px;
+}
+
+.editForm {
+    display: none;
+}

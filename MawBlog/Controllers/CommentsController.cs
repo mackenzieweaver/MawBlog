@@ -65,12 +65,16 @@ namespace MawBlog.Controllers
             {
                 var email = HttpContext.User.Identity.Name;
                 var authorid = _context.Users.FirstOrDefault(u => u.Email == email).Id;
+                var author = _context.Users.FirstOrDefault(u => u.Email == email);
+                var post = _context.Post.FirstOrDefault(p => p.Id == comment.PostId);
 
                 comment.Created = DateTime.Now;
                 comment.Updated = DateTime.Now;
                 comment.Content = userComment;
                 comment.AuthorId = authorid;
-                
+                comment.Author = author;
+                comment.Post = post;
+
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 //return Redirect($"~/Posts/Details/{comment.PostId}");
@@ -129,11 +133,13 @@ namespace MawBlog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Posts", new { id = comment.PostId });
             }
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
             ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
-            return View(comment);
+            //return View(comment);
+            return RedirectToAction("Details", "Posts", new { id = comment.PostId });
         }
 
         // GET: Comments/Delete/5

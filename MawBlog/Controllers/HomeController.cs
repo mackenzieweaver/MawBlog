@@ -42,12 +42,19 @@ namespace MawBlog.Controllers
         {
             var posts = from p in _context.Post
                         select p;
+            var blogs = _context.Blog;
             if (!String.IsNullOrEmpty(SearchString))
             {
-                posts = posts.Where(p => p.Title.Contains(SearchString) || p.Abstract.Contains(SearchString) || p.Content.Contains(SearchString));                
-                return View("Index", await posts.Include(p => p.Blog).ToListAsync());
+                posts = posts.Where(p => p.Title.Contains(SearchString) || p.Abstract.Contains(SearchString) || p.Content.Contains(SearchString));
+                //return View("Index", await posts.Include(p => p.Blog).ToListAsync());
             }
-            return View("Index", await posts.Include(p => p.Blog).ToListAsync());
+            //return View("Index", await posts.Include(p => p.Blog).ToListAsync());
+            CategoriesVM categories = new CategoriesVM()
+            {
+                Blogs = await blogs.ToListAsync(),
+                Posts = await posts.ToListAsync()
+            };
+            return View("Index", categories);
         }
 
         public async Task<IActionResult> Categories()
