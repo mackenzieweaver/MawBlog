@@ -103,8 +103,12 @@
                             </span>
                         </h5>
                         @comment.Content
-                        <br />
-                        <a asp-controller="Comments" asp-action="Edit">Edit</a>
+                        @*<br />
+                        <button class="btn btn-primary btn-sm editButton">Edit</button>
+                        <form class="editForm" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" hidden>
+                            <textarea name="editedComment" class="form-control" rows="2" value="@comment.Content"></textarea>
+                            <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                        </form>*@
                     </div>
                 </div>
             }
