@@ -9,13 +9,14 @@
 <h4>Comment</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="PostId" class="control-label"></label>
                 <select asp-for="PostId" class="form-control" asp-items="ViewBag.PostId"></select>
+                @*<p>@Model.Post.Title</p>*@
                 <span asp-validation-for="PostId" class="text-danger"></span>
             </div>
             <div class="form-group">

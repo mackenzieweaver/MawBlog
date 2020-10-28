@@ -76,8 +76,8 @@ namespace MawBlog.Controllers
                 //return Redirect($"~/Posts/Details/{comment.PostId}");
                 return RedirectToAction("Details", "Posts", new { id = comment.PostId });
             }
-            //ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
-            //ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
+            ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
             return View(comment);
         }
 
@@ -94,8 +94,8 @@ namespace MawBlog.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "Id", comment.AuthorId);
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Id", comment.PostId);
+            ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "DisplayName", comment.AuthorId);
+            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Title", comment.PostId);
             return View(comment);
         }
 
