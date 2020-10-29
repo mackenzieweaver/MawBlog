@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using MawBlog.Utilities;
+using MawBlog.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MawBlog.Controllers
 {
@@ -24,6 +26,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Posts
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Post.Include(p => p.Blog);
@@ -54,6 +57,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(int? id)
         {
             if(id == null)
@@ -83,6 +87,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated,ImageDataUrl")] Post post, IFormFile image)
         {
             if (ModelState.IsValid)
@@ -104,6 +109,7 @@ namespace MawBlog.Controllers
             return View(post);
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> BlogPosts(int? id)
         {
             if (id == null)
@@ -125,6 +131,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Posts/Edit/5
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -146,6 +153,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,Slug,IsPublished,Image,Created,Updated,ImageDataUrl")] Post post, IFormFile image)
         {
             if (id != post.Id)
@@ -184,6 +192,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -205,6 +214,7 @@ namespace MawBlog.Controllers
         // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Post.FindAsync(id);

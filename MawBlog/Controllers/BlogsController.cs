@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MawBlog.Data;
 using MawBlog.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MawBlog.Controllers
 {
+    [Authorize(Roles = "Admin, Moderator")]
     public class BlogsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -54,6 +56,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Name,Url")] Blog blog)
         {
             if (ModelState.IsValid)

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MawBlog.Data;
 using MawBlog.Models;
+using MawBlog.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MawBlog.Controllers
 {
@@ -20,6 +22,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Comments
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Comment.Include(c => c.Author).Include(c => c.Post);
@@ -27,6 +30,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Comments/Details/5
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +51,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Comments/Create
+        [Authorize(Roles = "Admin, Moderator")]
         public IActionResult Create()
         {
             ViewData["AuthorId"] = new SelectList(_context.Set<BlogUser>(), "Id", "FirstName");
@@ -86,6 +91,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Comments/Edit/5
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -108,6 +114,7 @@ namespace MawBlog.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,PostId,AuthorId,Content,Created,Updated")] Comment comment)
         {
             if (id != comment.Id)
@@ -143,6 +150,7 @@ namespace MawBlog.Controllers
         }
 
         // GET: Comments/Delete/5
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -165,6 +173,7 @@ namespace MawBlog.Controllers
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var comment = await _context.Comment.FindAsync(id);
