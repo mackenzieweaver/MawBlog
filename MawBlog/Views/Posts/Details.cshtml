@@ -18,6 +18,11 @@
             <a asp-controller="Posts" asp-action="BlogPosts" asp-route-id="@Model.BlogId">@Model.Blog.Name</a>
         </p>
 
+        @foreach(var tag in Model.Tags)
+        {
+            @tag
+        }
+
         <hr>
 
         <!-- Date/Time -->

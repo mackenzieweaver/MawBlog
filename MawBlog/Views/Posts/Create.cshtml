@@ -33,6 +33,7 @@
                 <input asp-for="Abstract" class="form-control" />
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
+            @Html.HiddenFor(model => model.Tags)
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
                 <input asp-for="Content" class="form-control" />

@@ -60,3 +60,10 @@ a:hover {
 .editForm {
     display: none;
 }
+
+.mytag {
+    color: var(--secondary) !important;
+    opacity: 1 !important;
+    border: none !important;
+    background-color: transparent !important;
+}

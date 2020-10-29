@@ -28,12 +28,14 @@ namespace MawBlog.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var posts = _context.Post.Where(p => p.IsPublished).Include(p => p.Blog);        
+            var posts = _context.Post.Where(p => p.IsPublished).Include(p => p.Blog);
             var blogs = _context.Blog;
+            var tags = _context.Tag;
             CategoriesVM categories = new CategoriesVM()
             {
                 Blogs = await blogs.ToListAsync(),
-                Posts = await posts.ToListAsync()
+                Posts = await posts.ToListAsync(),
+                Tags = await tags.ToListAsync()
             };
             return View(categories);
         }
@@ -66,6 +68,20 @@ namespace MawBlog.Controllers
             {
                 Blogs = await blogs.ToListAsync(),
                 Posts = await posts.ToListAsync()
+            };
+            return View("Index", categories);
+        }
+
+        public async Task<IActionResult> Tag()
+        {
+            var name = RouteData.Values["id"].ToString();
+            var posts = _context.Tag.Where(t => t.Name == name).Select(t => t.Post);
+            var blogs = _context.Blog;
+            CategoriesVM categories = new CategoriesVM()
+            {
+                Blogs = await blogs.ToListAsync(),
+                Posts = await posts.ToListAsync(),
+                Tags = await _context.Tag.ToListAsync()
             };
             return View("Index", categories);
         }
