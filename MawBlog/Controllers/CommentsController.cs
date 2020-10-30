@@ -113,8 +113,7 @@ namespace MawBlog.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Moderator")]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,PostId,AuthorId,Content,Created,Updated")] Comment comment)
         {
             if (id != comment.Id)
@@ -126,6 +125,8 @@ namespace MawBlog.Controllers
             {
                 try
                 {
+                    comment.Post = _context.Post.FirstOrDefault(p => p.Id == comment.PostId);
+                    comment.Author = _context.Users.FirstOrDefault(u => u.Id == comment.AuthorId);
                     _context.Update(comment);
                     await _context.SaveChangesAsync();
                 }

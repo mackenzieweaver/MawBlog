@@ -57,9 +57,9 @@ a:hover {
     padding-left: 2px;
 }
 
-.editForm {
+/*.editForm {
     display: none;
-}
+}*/
 
 .mytag {
     color: var(--secondary) !important;

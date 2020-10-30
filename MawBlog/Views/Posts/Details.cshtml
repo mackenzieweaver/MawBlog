@@ -18,7 +18,7 @@
             <a asp-controller="Posts" asp-action="BlogPosts" asp-route-id="@Model.BlogId">@Model.Blog.Name</a>
         </p>
 
-        @foreach(var tag in Model.Tags)
+        @foreach (var tag in Model.Tags)
         {
             @tag
         }
@@ -103,27 +103,30 @@
                     <div class="media-body ml-4">
                         <h5 class="mt-0">
                             @comment.Author.FirstName @comment.Author.LastName
-
                             <span style="font-size: 1rem; font-weight: 500; opacity: 0.65;">
                                 @comment.Created.ToString("MMM dd")
-
-                                @*<button class="editAnchor" onclick="ToggleEdit(@comment.Id)">Edit</button>*@
+                                @*@comment.Author <-- Email of commenter*@
+                                @*@User.Identity.Name <-- Email of user*@
+                                @if (User.Identity.Name == comment.Author.Email)
+                                {
+                                    <button class="editAnchor" onclick="ToggleEdit(document.getElementById('editForm-' + @comment.Id))">Edit</button>
+                                }
                             </span>
 
                         </h5>
-                        @Html.Raw(comment.Content)
-                        @*<form id="editForm-@comment.Id" class="editForm" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id">
-                            @Html.Hidden("Author", comment.Author)
-                            @Html.Hidden("AuthorId", comment.AuthorId)
-                            @Html.Hidden("Content", comment.Content)
-                            @Html.Hidden("Id", comment.Id)
-                            @Html.Hidden("Post", comment.Post)
-                            @Html.Hidden("PostId", Model.Id)
+                        <div id="comment-@comment.Id" class="align-items-center">
+                            <p class="mb-1">@Html.Raw(comment.Content)</p>
+                        </div>
+                        <form id="editForm-@comment.Id" class="editForm" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" style="display:none">
                             @Html.Hidden("Created", comment.Created)
+                            @Html.Hidden("AuthorId", comment.AuthorId)
+                            @Html.Hidden("Author", comment.Author)
+
                             @Html.Hidden("Updated", DateTime.Now)
-                            <textarea name="editedComment" class="form-control" rows="1">@Html.Raw(comment.Content)</textarea>
+                            @Html.Hidden("PostId", Model.Id)
+                            <input type="text" name="content" value="@Html.Raw(comment.Content)" />
                             <button class="btn btn-primary btn-sm" type="submit">Submit</button>
-                        </form>*@
+                        </form>
                     </div>
                 </div>
             }
