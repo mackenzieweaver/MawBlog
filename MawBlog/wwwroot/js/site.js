@@ -6,11 +6,13 @@ $(document).ready(function () {
     $('.myTables').DataTable();
 });
 
-function ToggleEdit(e) {
-    console.log(e);
+function ToggleEdit(id) {    
+    var e = document.getElementById("editForm-" + id);
     if (e.style.display == 'none') {
+        document.getElementById("comment-" + id).style.display = 'none';
         e.style.display = 'block';
     } else {
+        document.getElementById("comment-" + id).style.display = 'block';
         e.style.display = 'none';
     }
 }

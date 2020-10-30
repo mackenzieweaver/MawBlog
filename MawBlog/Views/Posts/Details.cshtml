@@ -109,13 +109,13 @@
                                 @*@User.Identity.Name <-- Email of user*@
                                 @if (User.Identity.Name == comment.Author.Email)
                                 {
-                                    <button class="editAnchor" onclick="ToggleEdit(document.getElementById('editForm-' + @comment.Id))">Edit</button>
+                                    <button class="editAnchor" onclick="ToggleEdit(@comment.Id)">Edit</button>
                                 }
                             </span>
 
                         </h5>
-                        <div id="comment-@comment.Id" class="align-items-center">
-                            <p class="mb-1">@Html.Raw(comment.Content)</p>
+                        <div class="align-items-center">
+                            <p id="comment-@comment.Id" class="mb-1">@Html.Raw(comment.Content)</p>
                         </div>
                         <form id="editForm-@comment.Id" class="editForm" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" style="display:none">
                             @Html.Hidden("Created", comment.Created)
@@ -124,8 +124,14 @@
 
                             @Html.Hidden("Updated", DateTime.Now)
                             @Html.Hidden("PostId", Model.Id)
-                            <input type="text" name="content" value="@Html.Raw(comment.Content)" />
-                            <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="content" value="@Html.Raw(comment.Content)">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </div>
+                            </div>
+                            @*<input type="text" name="content" value="@Html.Raw(comment.Content)" style="width: 300px" />*@
+                            @*<button class="btn btn-primary btn-sm mb-1" type="submit">Submit</button>*@
                         </form>
                     </div>
                 </div>
