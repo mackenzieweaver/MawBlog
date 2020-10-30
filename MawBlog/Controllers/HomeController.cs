@@ -45,6 +45,7 @@ namespace MawBlog.Controllers
             var posts = from p in _context.Post
                         select p;
             var blogs = _context.Blog;
+            var tags = _context.Tag;
             if (!String.IsNullOrEmpty(SearchString))
             {
                 posts = posts.Where(p => p.Title.Contains(SearchString) || p.Abstract.Contains(SearchString) || p.Content.Contains(SearchString));
@@ -54,7 +55,8 @@ namespace MawBlog.Controllers
             CategoriesVM categories = new CategoriesVM()
             {
                 Blogs = await blogs.ToListAsync(),
-                Posts = await posts.ToListAsync()
+                Posts = await posts.ToListAsync(),
+                Tags = await tags.ToListAsync()
             };
             return View("Index", categories);
         }
@@ -64,10 +66,12 @@ namespace MawBlog.Controllers
             var id = RouteData.Values["id"].ToString();
             var posts = _context.Post.Where(p => p.BlogId == Int32.Parse(id) && p.IsPublished == true).Include(p => p.Blog);
             var blogs = _context.Blog;
+            var tags = _context.Tag;
             CategoriesVM categories = new CategoriesVM()
             {
                 Blogs = await blogs.ToListAsync(),
-                Posts = await posts.ToListAsync()
+                Posts = await posts.ToListAsync(),
+                Tags = await tags.ToListAsync()
             };
             return View("Index", categories);
         }
