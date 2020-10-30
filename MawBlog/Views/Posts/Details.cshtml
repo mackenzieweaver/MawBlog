@@ -117,6 +117,7 @@
                         <div class="align-items-center">
                             <p id="comment-@comment.Id" class="mb-1">@Html.Raw(comment.Content)</p>
                         </div>
+                        @* hidden form until "edit" clicked *@
                         <form id="editForm-@comment.Id" class="editForm" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" style="display:none">
                             @Html.Hidden("Created", comment.Created)
                             @Html.Hidden("AuthorId", comment.AuthorId)

@@ -9,6 +9,7 @@ using MawBlog.Data;
 using MawBlog.Models;
 using MawBlog.Enums;
 using Microsoft.AspNetCore.Authorization;
+using System.Xml;
 
 namespace MawBlog.Controllers
 {
@@ -125,6 +126,13 @@ namespace MawBlog.Controllers
             {
                 try
                 {
+                    if (comment.Content.Contains("<!DOCTYPE"))
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.LoadXml(comment.Content);
+                        XmlNode elem = doc.DocumentElement.FirstChild.NextSibling;
+                        comment.Content = elem.FirstChild.InnerText.ToString();
+                    }
                     comment.Post = _context.Post.FirstOrDefault(p => p.Id == comment.PostId);
                     comment.Author = _context.Users.FirstOrDefault(u => u.Id == comment.AuthorId);
                     _context.Update(comment);
