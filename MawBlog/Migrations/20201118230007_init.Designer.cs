@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MawBlog.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201031191702_initial")]
-    partial class initial
+    [Migration("20201118230007_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
