@@ -11,6 +11,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MawBlog.Utilities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql;
 
 namespace MawBlog
 {
@@ -19,6 +24,8 @@ namespace MawBlog
         public async static Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            //host.MigrateDatabase();
+            await DataHelper.ManageData(host);
             await SeedDataAsync(host);
             host.Run();
         }
@@ -27,6 +34,8 @@ namespace MawBlog
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.CaptureStartupErrors(true);
+                    webBuilder.UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
                     webBuilder.UseStartup<Startup>();
                 });
 
@@ -47,6 +56,6 @@ namespace MawBlog
                     Console.WriteLine(ex);
                 }
             }
-        }
+        }        
     }
 }
