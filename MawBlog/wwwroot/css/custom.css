@@ -3,6 +3,10 @@
     --secondary: #F4A261;
 }
 
+body {
+    background-color: #e5e5e5;
+}
+
 .navbar, .footer {
     color: #ffffff !important;
     background-color: var(--primary) !important;

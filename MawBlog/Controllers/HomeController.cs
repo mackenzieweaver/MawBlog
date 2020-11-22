@@ -26,16 +26,23 @@ namespace MawBlog.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page)
         {
-            var posts = _context.Post.Where(p => p.IsPublished).Include(p => p.Blog);
+            var posted = _context.Post.Where(p => p.IsPublished).ToList().Count;
+            if (page < 0)
+            {
+                page = 0;
+            }
+            var posts = _context.Post.Where(p => p.IsPublished).Include(p => p.Blog).Skip(page * 5).Take(5);
             var blogs = _context.Blog;
             var tags = _context.Tag;
             CategoriesVM categories = new CategoriesVM()
             {
                 Blogs = await blogs.ToListAsync(),
                 Posts = await posts.ToListAsync(),
-                Tags = await tags.ToListAsync()
+                Tags = await tags.ToListAsync(),
+                PageNum = page,
+                TotalPosts = _context.Post.ToList().Count
             };
             return View(categories);
         }

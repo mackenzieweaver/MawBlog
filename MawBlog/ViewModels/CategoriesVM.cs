@@ -12,5 +12,7 @@ namespace MawBlog.ViewModels
         public ICollection<Blog> Blogs { get; set; }
         public ICollection<Post> Posts { get; set; }
         public ICollection<Tag> Tags { get; set; }
+        public int PageNum { get; set; }
+        public int TotalPosts { get; set; }
     }
 }
