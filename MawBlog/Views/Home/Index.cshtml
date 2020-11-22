@@ -14,7 +14,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <h1 class="my-4">My thoughts <small>on tech</small></h1>
-            @foreach (var post in Model.Posts.OrderByDescending(m => m.Created))
+            @foreach (var post in Model.Posts)
             {
                 <!-- Blog Post -->
                 <div class="card mb-4">

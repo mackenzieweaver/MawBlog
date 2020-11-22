@@ -33,7 +33,15 @@ namespace MawBlog.Controllers
             {
                 page = 0;
             }
-            var posts = _context.Post.Where(p => p.IsPublished).Include(p => p.Blog).Skip(page * 5).Take(5);
+            if(page * 5 > _context.Post.ToList().Count)
+            {
+                page = _context.Post.ToList().Count / 5;
+            }
+            var posts = _context.Post
+                .Where(p => p.IsPublished)
+                .OrderByDescending(p => p.Created)
+                .Include(p => p.Blog)
+                .Skip(page * 5).Take(5);
             var blogs = _context.Blog;
             var tags = _context.Tag;
             CategoriesVM categories = new CategoriesVM()
