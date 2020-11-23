@@ -45,11 +45,11 @@
                         <input type="hidden" value="@older" name="page" />
                         @if (older >= 0)
                         {
-                            <button type="submit" class="page-link btn text-white mr-1">&larr; Older</button>
+                            <button type="submit" class="page-link btn text-white mr-1">&larr; Prev</button>
                         }
                         else
                         {
-                            <button type="submit" class="page-link btn text-white mr-1" disabled>&larr; Older</button>
+                            <button type="submit" class="page-link btn text-white mr-1" disabled>&larr; Prev</button>
                         }
                     </form>
                 </li>
@@ -58,11 +58,11 @@
                         <input type="hidden" value="@newer" name="page" />
                         @if (Model.TotalPosts > newer * 5)
                         {
-                            <button type="submit" class="page-link btn text-white">Newer &rarr;</button>
+                            <button type="submit" class="page-link btn text-white">Next &rarr;</button>
                         }
                         else
                         {
-                            <button type="submit" class="page-link btn text-white" disabled>Newer &rarr;</button>
+                            <button type="submit" class="page-link btn text-white" disabled>Next &rarr;</button>
                         }
                     </form>
                 </li>
